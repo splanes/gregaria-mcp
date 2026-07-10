@@ -1,10 +1,10 @@
 // Servidor MCP remoto (streamable HTTP) para la app de Claude.
 // Endpoint público: https://mcp.gregaria.app/api/mcp
 //
-// Flujo: Bearer → getByToken → decrypt(enc_key) → tools read-only con {athleteId, apiKey}.
+// Flujo: Bearer → getByToken → decrypt(enc_key) → tools con {athleteId, apiKey} en el contexto.
 // Auth requerida (401 sin token válido). Rate-limit por token (429).
 import { createMcpHandler, withMcpAuth } from "mcp-handler"
-import { registerTools } from "../../../lib/tools.js"
+import { registerTools } from "../../../lib/tools/index.js"
 import { getByToken } from "../../../lib/store.js"
 import { decrypt } from "../../../lib/crypto.js"
 import { allow } from "../../../lib/ratelimit.js"
