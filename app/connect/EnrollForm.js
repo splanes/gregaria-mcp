@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 const input = {
   width: "100%",
@@ -22,16 +23,14 @@ const btn = {
   cursor: "pointer",
   marginTop: 14,
 }
-const mono = {
-  fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-  fontSize: 13,
-  wordBreak: "break-all",
-}
+const link = { color: "#60a5fa", cursor: "pointer", background: "none", border: "none", padding: 0, fontSize: 13 }
 
-export default function EnrollForm({ mcpUrl }) {
-  const [athleteId, setAthleteId] = useState("")
+export default function EnrollForm({ athleteId }) {
+  const router = useRouter()
+  const [editing, setEditing] = useState(!athleteId)
+  const [inputAthleteId, setInputAthleteId] = useState("")
   const [apiKey, setApiKey] = useState("")
-  const [token, setToken] = useState(null)
+  const [done, setDone] = useState(false)
   const [error, setError] = useState(null)
   const [busy, setBusy] = useState(false)
 
@@ -43,12 +42,14 @@ export default function EnrollForm({ mcpUrl }) {
       const res = await fetch("/api/enroll", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ athleteId: athleteId.trim(), apiKey: apiKey.trim() }),
+        body: JSON.stringify({ athleteId: inputAthleteId.trim(), apiKey: apiKey.trim() }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Error")
-      setToken(data.token)
       setApiKey("")
+      setDone(true)
+      setEditing(false)
+      router.refresh()
     } catch (err) {
       setError(err.message)
     } finally {
@@ -56,24 +57,15 @@ export default function EnrollForm({ mcpUrl }) {
     }
   }
 
-  if (token) {
+  if (!editing) {
     return (
       <div>
-        <p style={{ color: "#86efac" }}>✓ Listo. Copiá tu token (se muestra una sola vez):</p>
-        <div style={{ ...input, ...mono, marginTop: 4 }}>{token}</div>
-
-        <h4 style={{ marginBottom: 4 }}>3 · Agregá el connector en Claude</h4>
-        <p style={{ color: "#c3cad2", lineHeight: 1.6, margin: "4px 0" }}>
-          App de Claude → <b>Settings → Connectors → Add custom connector</b>:
+        <p style={{ color: "#86efac", marginBottom: 4 }}>
+          ✓ Cuenta conectada (atleta <b>{athleteId}</b>){done && " — listo"}
         </p>
-        <div style={{ marginTop: 8 }}>
-          <div style={{ color: "#9aa4af", fontSize: 12 }}>URL</div>
-          <div style={{ ...input, ...mono }}>{mcpUrl}</div>
-        </div>
-        <div style={{ marginTop: 8 }}>
-          <div style={{ color: "#9aa4af", fontSize: 12 }}>Header</div>
-          <div style={{ ...input, ...mono }}>Authorization: Bearer {token}</div>
-        </div>
+        <button style={link} type="button" onClick={() => setEditing(true)}>
+          Actualizar API key / cambiar atleta
+        </button>
       </div>
     )
   }
@@ -85,8 +77,8 @@ export default function EnrollForm({ mcpUrl }) {
         <input
           style={input}
           placeholder="i218573"
-          value={athleteId}
-          onChange={(e) => setAthleteId(e.target.value)}
+          value={inputAthleteId}
+          onChange={(e) => setInputAthleteId(e.target.value)}
           required
         />
       </label>
@@ -103,7 +95,7 @@ export default function EnrollForm({ mcpUrl }) {
       </label>
       {error && <p style={{ color: "#fca5a5", marginBottom: 0 }}>{error}</p>}
       <button style={btn} type="submit" disabled={busy}>
-        {busy ? "Generando…" : "Generar mi token"}
+        {busy ? "Conectando…" : "Conectar cuenta"}
       </button>
     </form>
   )

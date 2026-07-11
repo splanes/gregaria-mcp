@@ -65,8 +65,16 @@ pega su API key de Intervals y recibe su token. Vos nunca ves su key.
 4. Google Cloud → OAuth client → redirect URI `https://mcp.gregaria.app/api/auth/callback/google`.
 5. **Desactivar Deployment Protection** en la ruta `/api/mcp` (o usar el dominio de producción).
 
-## Agregar en Claude
+## Agregar en Claude / ChatGPT
 
-App de Claude → **Settings → Connectors → Add custom connector**:
-- URL: `https://mcp.gregaria.app/api/mcp`
-- Header: `Authorization: Bearer <token>`
+Es OAuth 2.1 + PKCE con dynamic client registration — no hay token para copiar a mano. El paso a
+paso con links vive en `/connect` (gateado por Google login + allowlist), pero en resumen:
+
+**Claude:** [Settings → Connectors → Add custom connector](https://claude.ai/settings/connectors?modal=add-custom-connector),
+pegar la URL `https://mcp.gregaria.app/api/mcp` y dejar Client ID/Secret vacíos. Al conectar,
+redirige a `/authorize` para loguearse con Google y confirmar.
+
+**ChatGPT / Codex:** requiere plan pago (Plus/Pro/Team/Enterprise) para activar
+[Developer Mode](https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt).
+Settings → Connectors → Advanced → Developer Mode → Create, misma URL, auth OAuth. **No probado
+en producción todavía.**
