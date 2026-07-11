@@ -70,7 +70,7 @@ pega su API key de Intervals y recibe su token. Vos nunca ves su key.
 Es OAuth 2.1 + PKCE con dynamic client registration — no hay token para copiar a mano. El paso a
 paso con links vive en `/connect` (gateado por Google login + allowlist), pero en resumen:
 
-**Claude:** [Settings → Connectors → Add custom connector](https://claude.ai/settings/connectors?modal=add-custom-connector),
+**Claude:** [Settings → Connectors → Add custom connector](https://claude.ai/customize/connectors?modal=add-custom-connector),
 pegar la URL `https://mcp.gregaria.app/api/mcp` y dejar Client ID/Secret vacíos. Al conectar,
 redirige a `/authorize` para loguearse con Google y confirmar.
 

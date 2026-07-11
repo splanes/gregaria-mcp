@@ -131,7 +131,7 @@ export default async function Connect({ searchParams }) {
               <ol style={{ lineHeight: 1.7, color: "#c3cad2", paddingLeft: 20, fontSize: 14 }}>
                 <li>
                   Abrí{" "}
-                  <a style={{ color: "#60a5fa" }} href="https://claude.ai/settings/connectors?modal=add-custom-connector" target="_blank" rel="noreferrer">
+                  <a style={{ color: "#60a5fa" }} href="https://claude.ai/customize/connectors?modal=add-custom-connector" target="_blank" rel="noreferrer">
                     Configuración → Conectores → Agregar conector personalizado
                   </a>.
                 </li>
