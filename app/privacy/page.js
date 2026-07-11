@@ -37,37 +37,12 @@ export default function Privacy() {
       </div>
 
       <div style={box}>
-        <h3 style={{ marginTop: 0 }}>What we store today</h3>
+        <h3 style={{ marginTop: 0 }}>No storage</h3>
         <p style={{ color: "#c3cad2" }}>
-          This project is currently a small closed beta (a handful of manually-approved accounts). For
-          that beta, we store:
-        </p>
-        <ul style={{ color: "#c3cad2" }}>
-          <li>Your Google account email, used only to gate access to a manual allow-list.</li>
-          <li>Your Intervals.icu athlete ID.</li>
-          <li>Your Intervals.icu API key, <b>encrypted at rest</b> (AES-256-GCM) — never logged, never
-            shown again after you paste it, never shared with the AI provider (Claude/ChatGPT never see it).</li>
-        </ul>
-        <p style={{ color: "#c3cad2" }}>
-          This exists solely to authenticate requests to the Intervals.icu API on your behalf. We don't
-          sell, share, or use it for advertising or analytics of any kind.
-        </p>
-      </div>
-
-      <div style={box}>
-        <h3 style={{ marginTop: 0 }}>Where this is going</h3>
-        <p style={{ color: "#c3cad2" }}>
-          We're moving to authenticate directly against Intervals.icu's own OAuth, so this server stops
-          storing any credentials at all — it becomes a stateless adapter between Intervals.icu's OAuth
-          and MCP-compatible AI clients, with no account storage on our side.
-        </p>
-      </div>
-
-      <div style={box}>
-        <h3 style={{ marginTop: 0 }}>Deleting your data</h3>
-        <p style={{ color: "#c3cad2" }}>
-          Email <a style={{ color: "#60a5fa" }} href="mailto:sebastian.planes@gmail.com">sebastian.planes@gmail.com</a>{" "}
-          at any time to have your account and stored key permanently deleted.
+          We do not store, log, or retain your Intervals.icu API key, activities, or wellness data on our
+          servers. This app is designed to be a stateless bridge: requests pass through in real time and
+          nothing persists here beyond the lifetime of the request. We don't sell, share, or use your
+          data for advertising or analytics of any kind.
         </p>
       </div>
     </main>
