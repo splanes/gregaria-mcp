@@ -74,3 +74,10 @@ deployment (proxy) to log in and confirm.
 - **No coach mode (multi-athlete listing) yet.** Intervals.icu's `GET /athletes` needs a scope
   that isn't confirmed on their end, so there are no tools to list or compare multiple athletes at
   once — every tool call resolves a single athlete (the key owner, or an explicit `athlete_id`).
+- **`add_or_update_event` return shape changed.** It used to resolve to the bare Intervals event
+  object; it now always returns `{ event, warnings, verification }` (see
+  `lib/tools/add-or-update-event.js`). This guards against Intervals' `description`-to-`workout_doc`
+  text parser, which is confirmed silently lossy in some cases (root cause not fully identified —
+  the pre-flight `warnings` are heuristics, not a reliable predictor; `verification`, diffed against
+  what Intervals actually stored, is the authoritative signal). Prefer sending `workout_doc` directly
+  over free-text `description` for structured workouts — it bypasses that parser entirely.
