@@ -27,6 +27,19 @@ Claude app  ──custom connector──►  /api/mcp   (Vercel serverless, alwa
                                                      └─ tools → forward the Bearer → Intervals.icu
 ```
 
+### API-key mode (no OAuth) — e.g. Open WebUI
+
+For MCP clients that only support a static Bearer token (no OAuth dance), hit
+`/api/mcp?auth=apikey` instead of `/api/mcp`, with `Authorization: Bearer <your Intervals.icu
+API key>` (from intervals.icu/settings). Same endpoint, same tools — the `?auth=apikey` query
+param just tells this server to treat the Bearer value as a personal API key and send it to
+Intervals.icu over HTTP Basic auth (`API_KEY:<key>`), which is what Intervals.icu actually
+requires for personal keys (OAuth tokens go over Bearer instead). Still zero storage: the key is
+forwarded on every request, never persisted or logged.
+
+In Open WebUI: add an MCP tool server (type "MCP", Streamable HTTP), URL
+`https://<your-domain>/api/mcp?auth=apikey`, auth type Bearer, Key = your Intervals.icu API key.
+
 - **Zero credential storage.** No KV, no permanent encryption, no Google login. The only ephemeral
   state (`proxy` mode) is the in-flight OAuth handshake, sealed with `RELAY_SEAL_KEY` and expiring
   in minutes — never written to disk.

@@ -35,7 +35,7 @@ export default async function Home() {
       </p>
 
       <div style={box}>
-        <h3 style={{ marginTop: 0 }}>Connect</h3>
+        <h3 style={{ marginTop: 0 }}>Connect (Claude, OAuth)</h3>
         <p style={{ color: "#c3cad2" }}>
           <a
             href="https://claude.ai/customize/connectors?modal=add-custom-connector"
@@ -49,6 +49,22 @@ export default async function Home() {
         <p style={{ color: "#c3cad2" }}>
           Connecting will ask you to log in to Intervals.icu and authorize access. No account or
           signup here — this server doesn't store anything.
+        </p>
+      </div>
+
+      <div style={box}>
+        <h3 style={{ marginTop: 0 }}>Connect (API key, e.g. Open WebUI)</h3>
+        <p style={{ color: "#c3cad2" }}>
+          No OAuth dance — for clients that only support a static Bearer token. Add an MCP tool
+          server (Streamable HTTP), auth type Bearer, and use this URL:
+        </p>
+        <p style={{ color: "#e8eaed", fontFamily: "monospace" }}>{url}?auth=apikey</p>
+        <p style={{ color: "#c3cad2" }}>
+          Key: your personal{" "}
+          <a href="https://intervals.icu/settings" style={{ color: "#3b82f6" }}>
+            Intervals.icu API key
+          </a>
+          . Still never stored here — forwarded as-is on every request.
         </p>
       </div>
 
